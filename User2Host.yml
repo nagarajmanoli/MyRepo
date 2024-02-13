@@ -1,0 +1,31 @@
+
+
+
+parameters:
+- name: Hostpoolname
+  type: string
+  default: "null"
+- name: SessionHostName
+  type: string
+  default: "null"
+- name: ResourceGroup
+  type: string
+  default: "null"
+- name: UserEmailAddress
+  type: string
+  default: "null"
+
+  
+trigger: none
+
+steps:
+- task: AzurePowerShell
+  displayName: 'Azure PowerShell script: FilePath'
+  inputs:
+    azureSubscription: 'azure-prod-service-connection'  #Provide right azure subscription name here
+    ScriptPath: 'User2Host.ps1'
+    ScriptArguments: "-Hostpoolname ${{parameters.Hostpoolname}} `
+                      -SessionHostName ${{parameters.SessionHostName}} `
+                      -ResourceGroup ${{parameters.ResourceGroup}} `
+                       UserEmailAddress ${{parameters.UserEmailAddress}}"                                                  
+    azurePowerShellVersion: LatestVersion
